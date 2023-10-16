@@ -1,13 +1,67 @@
-[gd_scene load_steps=2 format=3 uid="uid://xi1pdkqynr8m"]
+[gd_scene load_steps=5 format=3 uid="uid://xi1pdkqynr8m"]
 
+[ext_resource type="Script" path="res://level_1.gd" id="1_vknks"]
 [ext_resource type="Texture2D" uid="uid://hd68dj5myg80" path="res://art/purple.png" id="1_yxlna"]
+[ext_resource type="PackedScene" uid="uid://ffx0c5qvsoiw" path="res://player.tscn" id="2_dn1nb"]
+[ext_resource type="PackedScene" uid="uid://cbyfh7mwc73wp" path="res://maze.tscn" id="3_ahttk"]
 
 [node name="Level1" type="Node2D"]
+script = ExtResource("1_vknks")
 
-[node name="Background" type="TextureRect" parent="."]
-offset_right = 1152.0
-offset_bottom = 648.0
+[node name="Graphics" type="Node" parent="."]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="Graphics"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Graphics/ParallaxBackground"]
+motion_scale = Vector2(0.2, 0.2)
+
+[node name="Background" type="TextureRect" parent="Graphics/ParallaxBackground/ParallaxLayer"]
+z_index = -100
+offset_left = -1216.0
+offset_top = -1208.0
+offset_right = 2008.0
+offset_bottom = 1296.0
 size_flags_horizontal = 3
 texture = ExtResource("1_yxlna")
-expand_mode = 1
 stretch_mode = 1
+
+[node name="StartLabel" type="Label" parent="Graphics"]
+z_index = -25
+offset_left = -158.0
+offset_top = -320.0
+offset_right = -118.0
+offset_bottom = -294.0
+text = "start"
+
+[node name="EndLabel" type="Label" parent="Graphics"]
+z_index = -25
+offset_left = 681.0
+offset_top = 167.0
+offset_right = 721.0
+offset_bottom = 193.0
+text = "end"
+
+[node name="TutorialLabel" type="Label" parent="Graphics"]
+z_index = -25
+offset_left = -290.0
+offset_top = -387.0
+offset_right = -132.0
+offset_bottom = -335.0
+text = "arrow keys or WASD
+don't fall off"
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 4
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+build_mode = 1
+polygon = PackedVector2Array(-512, -640, -512, 768, 1288, 768, 1280, -640)
+
+[node name="Player" parent="." instance=ExtResource("2_dn1nb")]
+position = Vector2(-138, -242)
+collision_mask = 5
+gravity_scale = 2.66454e-15
+
+[node name="Maze" parent="." instance=ExtResource("3_ahttk")]
+
+[connection signal="body_exited" from="Maze" to="." method="_on_maze_body_exited"]
