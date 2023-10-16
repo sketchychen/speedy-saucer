@@ -1,3 +1,13 @@
-[gd_scene format=3 uid="uid://xi1pdkqynr8m"]
+[gd_scene load_steps=2 format=3 uid="uid://xi1pdkqynr8m"]
+
+[ext_resource type="Texture2D" uid="uid://hd68dj5myg80" path="res://art/purple.png" id="1_yxlna"]
 
 [node name="Level1" type="Node2D"]
+
+[node name="Background" type="TextureRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+size_flags_horizontal = 3
+texture = ExtResource("1_yxlna")
+expand_mode = 1
+stretch_mode = 1
